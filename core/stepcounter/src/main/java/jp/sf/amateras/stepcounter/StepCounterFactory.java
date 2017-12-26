@@ -133,11 +133,11 @@ public class StepCounterFactory {
 			// XHTML用カウンタを作成
 			return createXMLCounter("XHTML");
 
-		} else if(fileName.endsWith(".js")){
+		} else if(fileName.endsWith(".js") || fileName.endsWith(".ts")){
 			// JavaScript用カウンタを作成
 			return createJavaCounter("js");
 
-		} else if(fileName.endsWith(".json")){
+		} else if(fileName.endsWith(".json") || fileName.endsWith(".yml")|| fileName.endsWith(".yaml")){
 			// JSON用カウンタを作成
 			return createJavaCounter("JSON");
 
@@ -206,7 +206,7 @@ public class StepCounterFactory {
 			// プロパティファイル用カウンタを作成
 			return createShellCounter("Properties");
 
-		} else if(fileName.endsWith(".xml") || fileName.endsWith(".dicon")) {
+		} else if(fileName.endsWith(".xml") || fileName.endsWith(".dicon") ||  fileName.endsWith(".jrxml")) {
 			// XML用カウンタを作成
 			return createXMLCounter("XML");
 
@@ -315,7 +315,7 @@ public class StepCounterFactory {
         } else if(fileName.endsWith(".as")){
             // ActionScript3用カウンタを作成
             return createJavaCounter(".as");
-            
+
         } else if(fileName.endsWith(".mxml")){
         	// MXML用カウンタを作成
         	return createXMLCounter(".mxml");
