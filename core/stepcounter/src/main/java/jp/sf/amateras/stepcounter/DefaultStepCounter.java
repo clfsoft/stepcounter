@@ -76,7 +76,7 @@ public class DefaultStepCounter implements StepCounter, Cutter {
 		}
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), charSetName));
-		
+
 		String category = "";
 		long step    = 0;
 		long non     = 0;
@@ -86,18 +86,19 @@ public class DefaultStepCounter implements StepCounter, Cutter {
 			String line = null;
 			boolean areaFlag = false;
 			AreaComment lastAreaComment = new AreaComment();
-	
+
 			while((line = reader.readLine()) != null){
 				if(category.length() == 0){
 					Matcher matcher = CATEGORY_PATTERN.matcher(line);
 					if(matcher.find()){
 						category = matcher.group(1);
+
 					}
 				}
 				if(IGNORE_PATTERN.matcher(line).find()){
 					return null;
 				}
-	
+
 				String trimedLine = line.trim();
 				if(areaFlag==false){
 					if(nonCheck(trimedLine)){
@@ -122,8 +123,21 @@ public class DefaultStepCounter implements StepCounter, Cutter {
 		} finally {
 			reader.close();
 		}
+
+        if (category.length() == 0) {
+            String filePath = file.getCanonicalPath();
+            Matcher matcher = JAVA_TEST_PATTERN.matcher(filePath);
+            if (matcher.find()) {
+                category = "TEST";
+            } else {
+                category = "MAIN";
+            }
+        }
+
 		return new CountResult(file, file.getName(), getFileType(), category, step, non, comment);
 	}
+
+   private static Pattern JAVA_TEST_PATTERN = Pattern.compile("src[/\\\\]test[/\\\\](java|resources)");
 
 	/** スキップパターンにマッチするかチェック */
 	private boolean skipPatternCheck(String line){
