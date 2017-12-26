@@ -237,7 +237,7 @@ public class StepCounterFactory {
 			counter.setFileType("BAT");
 			return counter;
 
-		} else if(fileName.endsWith(".css")){
+		} else if(fileName.endsWith(".css") || fileName.endsWith(".scss")){
 			// CSS用カウンタを作成
 			DefaultStepCounter counter = new DefaultStepCounter();
 			counter.addAreaComment(new AreaComment("/*","*/"));
@@ -262,8 +262,20 @@ public class StepCounterFactory {
 			counter.addAreaComment(new AreaComment("\"","\""));
 			counter.setFileType("Smalltalk");
 			return counter;
+        } else if(fileName.endsWith(".txt")){
+            // Velocity用カウンタを作成
+            DefaultStepCounter counter = new DefaultStepCounter();
+            counter.addLineComment("##");
+            counter.setFileType("txt");
+            return counter;
 
-		} else if(fileName.endsWith(".vm") || fileName.endsWith(".vsl")){
+        }
+        else if(fileName.endsWith(".md")){
+            // Velocity用カウンタを作成
+            DefaultStepCounter counter = new DefaultStepCounter();
+            counter.setFileType("markdown");
+            return counter;
+        } else if(fileName.endsWith(".vm") || fileName.endsWith(".vsl")){
 			// Velocity用カウンタを作成
 			DefaultStepCounter counter = new DefaultStepCounter();
 			counter.addLineComment("##");

@@ -88,13 +88,13 @@ public class DefaultStepCounter implements StepCounter, Cutter {
 			AreaComment lastAreaComment = new AreaComment();
 
 			while((line = reader.readLine()) != null){
-				if(category.length() == 0){
-					Matcher matcher = CATEGORY_PATTERN.matcher(line);
-					if(matcher.find()){
-						category = matcher.group(1);
-
-					}
-				}
+//				if(category.length() == 0){
+//					Matcher matcher = CATEGORY_PATTERN.matcher(line);
+//					if(matcher.find()){
+//						category = matcher.group(1);
+//
+//					}
+//				}
 				if(IGNORE_PATTERN.matcher(line).find()){
 					return null;
 				}
