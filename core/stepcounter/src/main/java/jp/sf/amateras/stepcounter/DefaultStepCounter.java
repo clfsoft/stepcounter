@@ -124,15 +124,16 @@ public class DefaultStepCounter implements StepCounter, Cutter {
 			reader.close();
 		}
 
-        if (category.length() == 0) {
-            String filePath = file.getCanonicalPath();
-            Matcher matcher = JAVA_TEST_PATTERN.matcher(filePath);
-            if (matcher.find()) {
-                category = "TEST";
-            } else {
-                category = "MAIN";
-            }
+
+        String filePath = file.getCanonicalPath();
+        String fileName = file.getName();
+        Matcher matcher = JAVA_TEST_PATTERN.matcher(filePath);
+        if (matcher.find() || fileName.endsWith(".spec.ts")) {
+            category = "TEST";
+        } else {
+            category = "MAIN";
         }
+
 
 		return new CountResult(file, file.getName(), getFileType(), category, step, non, comment);
 	}

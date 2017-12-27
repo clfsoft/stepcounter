@@ -1,5 +1,8 @@
 package jp.sf.amateras.stepcounter;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * ステップカウンタのインスタンスを生成するファクトリ。
  * このクラスを修正することで簡単に対応する形式を追加することができます。
@@ -78,6 +81,13 @@ public class StepCounterFactory {
 		// 小文字に変換
 		fileName = fileName.toLowerCase();
 
+        List<String> ignore = Arrays.asList(".min.css");
+        for (String ext : ignore) {
+            if (fileName.endsWith(ext)) {
+                return null;
+            }
+        }
+
 		if(fileName.endsWith(".java")){
 			// Java用カウンタを作成
 			return createJavaCounter("Java");
@@ -133,11 +143,15 @@ public class StepCounterFactory {
 			// XHTML用カウンタを作成
 			return createXMLCounter("XHTML");
 
-		} else if(fileName.endsWith(".js") || fileName.endsWith(".ts")){
-			// JavaScript用カウンタを作成
-			return createJavaCounter("js");
+        } else if(fileName.endsWith(".js") ){
+            // JavaScript用カウンタを作成
+            return createJavaCounter("js");
 
-		} else if(fileName.endsWith(".json") || fileName.endsWith(".yml")|| fileName.endsWith(".yaml")){
+        } else if(fileName.endsWith(".ts")){
+            // JavaScript用カウンタを作成
+            return createJavaCounter("ts");
+
+        } else if(fileName.endsWith(".json") || fileName.endsWith(".yml")|| fileName.endsWith(".yaml")){
 			// JSON用カウンタを作成
 			return createJavaCounter("JSON");
 
@@ -268,7 +282,11 @@ public class StepCounterFactory {
             counter.addLineComment("##");
             counter.setFileType("txt");
             return counter;
-
+        } else if (fileName.equals("spring.factories")){
+            DefaultStepCounter counter = new DefaultStepCounter();
+            counter.addLineComment("#");
+            counter.setFileType("spring");
+            return counter;
         }
         else if(fileName.endsWith(".md")){
             // Velocity用カウンタを作成
